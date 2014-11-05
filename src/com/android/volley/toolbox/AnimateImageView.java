@@ -18,6 +18,8 @@
 
 package com.android.volley.toolbox;
 
+import com.hjbalan.volleyex.R;
+
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
@@ -29,12 +31,10 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 
-import com.vinaysshenoy.volleyenhanced.R;
-
 /**
  * Created by vinaysshenoy on 19/5/13.
  */
-public class AnimateImageView extends ImageView implements Animation.AnimationListener{
+public class AnimateImageView extends ImageView implements Animation.AnimationListener {
 
     /**
      * Whether changes to this imageview
@@ -52,18 +52,6 @@ public class AnimateImageView extends ImageView implements Animation.AnimationLi
      */
     private Animation mOutAnimation;
 
-    /**
-     * The different types of image resources
-     * possible. Used to animate the images
-     * when changing
-     */
-    private static interface ImageType {
-        public static final int URI = 1;
-        public static final int BITMAP = 2;
-        public static final int DRAWABLE = 3;
-        public static final int RESOURCE = 4;
-    }
-
     private int mInImageType;
 
     /**
@@ -71,8 +59,11 @@ public class AnimateImageView extends ImageView implements Animation.AnimationLi
      * out animation ends and the fade animation begins
      */
     private Uri mInImageUri;
+
     private Bitmap mInBitmap;
+
     private Drawable mInDrawable;
+
     private int mInResId;
 
     public AnimateImageView(Context context) {
@@ -92,22 +83,24 @@ public class AnimateImageView extends ImageView implements Animation.AnimationLi
 
     private void init(Context context, AttributeSet attrs) {
 
-        if(attrs == null) {
+        if (attrs == null) {
             initializeWithDefaults();
         } else {
-            TypedArray attributes = context.obtainStyledAttributes(attrs, R.styleable.AnimateImageView);
+            TypedArray attributes = context
+                    .obtainStyledAttributes(attrs, R.styleable.AnimateImageView);
 
-            if(attributes == null) {
+            if (attributes == null) {
                 initializeWithDefaults();
-            }
-
-            else {
-                mShouldAnimateChanges = attributes.getBoolean(R.styleable.AnimateImageView_animate_changes, false);
-                int inAnimationResId = attributes.getResourceId(R.styleable.AnimateImageView_in_animation, 0);
-                int outAnimationResId = attributes.getResourceId(R.styleable.AnimateImageView_out_animation, 0);
+            } else {
+                mShouldAnimateChanges = attributes
+                        .getBoolean(R.styleable.AnimateImageView_animate_changes, false);
+                int inAnimationResId = attributes
+                        .getResourceId(R.styleable.AnimateImageView_in_animation, 0);
+                int outAnimationResId = attributes
+                        .getResourceId(R.styleable.AnimateImageView_out_animation, 0);
                 attributes.recycle();
 
-                if(inAnimationResId == 0) {
+                if (inAnimationResId == 0) {
                     mInAnimation = new AlphaAnimation(0.0f, 1.0f);
                     mInAnimation.setDuration(400);
                     mInAnimation.setFillAfter(true);
@@ -115,7 +108,7 @@ public class AnimateImageView extends ImageView implements Animation.AnimationLi
                     mInAnimation = AnimationUtils.loadAnimation(context, inAnimationResId);
                 }
 
-                if(outAnimationResId == 0) {
+                if (outAnimationResId == 0) {
                     mOutAnimation = new AlphaAnimation(1.0f, 0.0f);
                     mOutAnimation.setDuration(150);
                     mOutAnimation.setFillAfter(true);
@@ -138,6 +131,7 @@ public class AnimateImageView extends ImageView implements Animation.AnimationLi
 
     /**
      * Whether any changes to this ImageView should be animated
+     *
      * @param animateChanges whether to animate the changes or not
      */
     public void setShouldAnimateChanges(boolean animateChanges) {
@@ -146,6 +140,7 @@ public class AnimateImageView extends ImageView implements Animation.AnimationLi
 
     /**
      * The animation to use when adding a new image
+     *
      * @param inAnimation The animation to add an image
      */
     public void setInAnimation(Animation inAnimation) {
@@ -154,6 +149,7 @@ public class AnimateImageView extends ImageView implements Animation.AnimationLi
 
     /**
      * The animation to use when removing the older image
+     *
      * @param outAnimation The animation to remove an image
      */
     public void setOutAnimation(Animation outAnimation) {
@@ -168,8 +164,8 @@ public class AnimateImageView extends ImageView implements Animation.AnimationLi
     @Override
     public void onAnimationEnd(Animation animation) {
 
-        if(animation == mOutAnimation) {
-            switch(mInImageType) {
+        if (animation == mOutAnimation) {
+            switch (mInImageType) {
 
                 case ImageType.URI: {
                     setImageURI(mInImageUri);
@@ -198,8 +194,8 @@ public class AnimateImageView extends ImageView implements Animation.AnimationLi
             startAnimation(mInAnimation);
         }
 
-        if(animation == mOutAnimation) {
-            switch(mInImageType) {
+        if (animation == mOutAnimation) {
+            switch (mInImageType) {
 
                 case ImageType.URI: {
                     mInImageUri = null;
@@ -236,7 +232,7 @@ public class AnimateImageView extends ImageView implements Animation.AnimationLi
 
     public void setImageResource(int resId, boolean animate) {
 
-        if(mShouldAnimateChanges & animate) {
+        if (mShouldAnimateChanges & animate) {
             mInImageType = ImageType.RESOURCE;
             mInResId = resId;
             startAnimation(mOutAnimation);
@@ -248,7 +244,7 @@ public class AnimateImageView extends ImageView implements Animation.AnimationLi
 
     public void setImageURI(Uri uri, boolean animate) {
 
-        if(mShouldAnimateChanges & animate) {
+        if (mShouldAnimateChanges & animate) {
             mInImageType = ImageType.URI;
             mInImageUri = uri;
             startAnimation(mOutAnimation);
@@ -259,7 +255,7 @@ public class AnimateImageView extends ImageView implements Animation.AnimationLi
 
     public void setImageDrawable(Drawable drawable, boolean animate) {
 
-        if(mShouldAnimateChanges & animate) {
+        if (mShouldAnimateChanges & animate) {
             mInImageType = ImageType.DRAWABLE;
             mInDrawable = drawable;
             startAnimation(mOutAnimation);
@@ -271,12 +267,25 @@ public class AnimateImageView extends ImageView implements Animation.AnimationLi
 
     public void setImageBitmap(Bitmap bm, boolean animate) {
 
-        if(mShouldAnimateChanges & animate) {
+        if (mShouldAnimateChanges & animate) {
             mInImageType = ImageType.BITMAP;
             mInBitmap = bm;
             startAnimation(mOutAnimation);
         } else {
             super.setImageBitmap(bm);
         }
+    }
+
+    /**
+     * The different types of image resources
+     * possible. Used to animate the images
+     * when changing
+     */
+    private static interface ImageType {
+
+        public static final int URI = 1;
+        public static final int BITMAP = 2;
+        public static final int DRAWABLE = 3;
+        public static final int RESOURCE = 4;
     }
 }

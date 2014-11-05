@@ -17,15 +17,15 @@
  */
 package com.android.volley.toolbox;
 
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.ImageLoader.ImageContainer;
+import com.android.volley.toolbox.ImageLoader.ImageListener;
+import com.hjbalan.volleyex.R;
+
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.text.TextUtils;
 import android.util.AttributeSet;
-
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.ImageLoader.ImageContainer;
-import com.android.volley.toolbox.ImageLoader.ImageListener;
-import com.vinaysshenoy.volleyenhanced.R;
 
 /**
  * Handles fetching an image from a URL as well as the life-cycle of the
@@ -34,21 +34,21 @@ import com.vinaysshenoy.volleyenhanced.R;
 public class NetworkImageView extends AnimateImageView {
 
     /** The URL of the network image to load */
-    private String         mUrl;
+    private String mUrl;
 
     /**
      * Resource ID of the image to be used as a placeholder until the network
      * image is loaded.
      */
-    private int            mDefaultImageId;
+    private int mDefaultImageId;
 
     /**
      * Resource ID of the image to be used if the network response fails.
      */
-    private int            mErrorImageId;
+    private int mErrorImageId;
 
     /** Local copy of the ImageLoader. */
-    private ImageLoader    mImageLoader;
+    private ImageLoader mImageLoader;
 
     /** Current ImageContainer. (either in-flight or finished) */
     private ImageContainer mImageContainer;
@@ -78,9 +78,7 @@ public class NetworkImageView extends AnimateImageView {
 
             if (attributes == null) {
                 initializeWithDefaults();
-            }
-
-            else {
+            } else {
                 mDefaultImageId = attributes.getResourceId(
                         R.styleable.NetworkImageView_default_image, 0);
                 mErrorImageId = attributes.getResourceId(
@@ -102,15 +100,13 @@ public class NetworkImageView extends AnimateImageView {
      * calling this will immediately either set the cached image (if available)
      * or the default image specified by
      * {@link NetworkImageView#setDefaultImageResId(int)} on the view.
-     * 
+     *
      * NOTE: If applicable, {@link NetworkImageView#setDefaultImageResId(int)}
      * and {@link NetworkImageView#setErrorImageResId(int)} should be called
      * prior to calling this function.
-     * 
-     * @param url
-     *            The URL that should be loaded into this ImageView.
-     * @param imageLoader
-     *            ImageLoader that will be used to make the request.
+     *
+     * @param url         The URL that should be loaded into this ImageView.
+     * @param imageLoader ImageLoader that will be used to make the request.
      */
     public void setImageUrl(String url, ImageLoader imageLoader) {
         mUrl = url;
@@ -137,9 +133,8 @@ public class NetworkImageView extends AnimateImageView {
 
     /**
      * Loads the image for the view if it isn't already loaded.
-     * 
-     * @param isInLayoutPass
-     *            True if this was invoked from a layout pass, false otherwise.
+     *
+     * @param isInLayoutPass True if this was invoked from a layout pass, false otherwise.
      */
     private void loadImageIfNecessary(final boolean isInLayoutPass) {
 
