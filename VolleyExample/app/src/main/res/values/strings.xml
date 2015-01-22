@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">VolleyExample</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+
+    <!-- api error -->
+    <string name="error_connection_timeout">数据请求超时了</string>
+    <string name="error_server_down">服务器开小岔了</string>
+    <string name="error_no_network">没有网络链接哦</string>
+    <string name="error_unknown">位置错误，联系Nut客服</string>
+    <string name="error_json_exception">数据解析错误，联系Nut客服</string>
+
+</resources>
